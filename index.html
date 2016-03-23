@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File priniting practice using drag and drop</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="author" href="humans.txt">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="error"></div>
+    <!-- <div class="dropzone" id="dropzone">
+    	<p>drop CSV file here to upload.</p>
+    	
+    </div> -->
+    <input type="file" id="fileInput">
+    <h3>Map the CSV header values with json keys</h3>
+    <h4>CSV Headers <span style="float:right">JSON keys</span></h4>
+    <form class="mapper">
+        
+        <!-- <label for="name" id="name">Name</label> -->
+    </form>
+    <script>
+    var keys = ['index', 'name', 'mailId', 'sex', 'ip']
+    var options = '';
+    for (var i = 0; i < keys.length; i++) {
+        options = options + "<option value='" + keys[i] + "'>" + keys[i] + "</option>";
+    }
+
+    var file_input = document.getElementById('fileInput');
+    file_input.addEventListener('change', function(e) {
+        file = file_input.files[0];
+
+        console.log("uploaded", file)
+        if (IsCSV(file)) {
+        	$('.error').html('')
+            var reader = new FileReader();
+            reader.readAsText(file)
+            reader.onload = function() {
+                content = reader.result;
+                headers = content.split('\n')[0].split(",");
+                attach_headers(headers);
+                $('.mapper').append('<br><br><button id="submit" type="button">Submit</button>');
+                $('#submit').on('click', function(e) {
+                    e.preventDefault();
+                    mapping=$('form').serializeArray();
+                    console.log('hello', e,mapping);
+
+                })
+            }
+        } else {
+        	$('.mapper').html('')
+            error();
+        }
+
+
+
+    });
+
+    /*var heyya=function(e){
+    	e.preventDefault();
+    	console.log('boo yeah!!')
+    }*/
+    var IsCSV = function(file) {
+        var f = file.name.split('.')
+        if (f[f.length - 1].toLowerCase() === 'csv')
+            return true;
+        else {
+            return false;
+        }
+    }
+    
+    var error = function() {
+        $('.error').append('<h1>Error : file should be CSV ,read upload guidelines for more info</h1>')
+    }
+    var attach_headers = function(headers) {
+        // var mapper=$('mapper');
+        console.log('in function')
+        for (var i = 0; i < headers.length; i++) {
+            console.log('attaching');
+            var select = "<select name='" + headers[i] + "' id='" + headers[i] + "'>" + options + "</select><br>";
+            var put = "<div><label for='" + headers[i] + "'> " + headers[i] + "</label>" + select + "</div>";
+
+            $('.mapper').append(put);
+
+        }
+
+    }
+    var now = function() {
+        var mapping = $('form').serializeArray();
+        console.log(mapping);
+    }
+
+    /*var upload=function(files){
+        			file=files;
+        			console.log(files)
+        		};
+        	var dropzone=document.getElementById('dropzone');
+        	dropzone.ondrop=function(e){
+        		e.preventDefault();
+         		this.className="dropzone";
+        		        		// return false;
+        		console.log('dropped file !!',e.dataTransfer.files)
+        		upload(e.dataTransfer.files);
+        	}
+        	dropzone.ondragover=function(){
+        		// console.log(this)
+        		this.className="dropzone dragover";
+        		return false;
+        	}
+        	dropzone.ondragleave=function(){
+         		this.className="dropzone";
+        		return false;
+        	}*/
+    </script>
+</body>
+
+</html>
