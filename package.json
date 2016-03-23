@@ -1,0 +1,31 @@
+{
+  "name": "dotplot",
+  "version": "1.0.0",
+  "description": "dptplot proof of concept of data import ,conversion and parsing to be fed into graph",
+  "main": "program.js",
+  "scripts": {
+    "test": "parseme"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshitijpurwar/Dotplot_POC.git"
+  },
+  "keywords": [
+    "parsing",
+    "dotplot",
+    "conversion",
+    "csv",
+    "json",
+    "gsoc"
+  ],
+  "author": "kshitij purwar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kshitijpurwar/Dotplot_POC/issues"
+  },
+  "homepage": "https://github.com/kshitijpurwar/Dotplot_POC#readme",
+  "dependencies": {
+    "csvtojson": "^0.5.2",
+    "underscore": "^1.8.3"
+  }
+}
