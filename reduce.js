@@ -1,10 +1,16 @@
+//Usage info 
 var input_file = process.argv[2]
+var output_file = process.argv[3]
 var fs = require('fs');
 var u = require("underscore");
-var obj;
+//input _file takes the source JSON file i.e. converted JSON filr
+//output_file takes the file where to write the facets
+
 facet = {};
+function reduce(input_file,output_file){
 fs.readFile(input_file, 'UTF-8', function(err, data) {
     if (err)
+    	var obj;
         console.log(err);
     obj = JSON.parse(data);
     console.log(obj[1]);
@@ -29,9 +35,12 @@ fs.readFile(input_file, 'UTF-8', function(err, data) {
             });
         }
     }
-
-
-
-
+	var JSON_writing=fs.createWriteStream(output_file); 
+    JSON_writing.write(JSON.stringify(facet));
+    JSON_writing.end();
     console.log(facet);
-})
+})	
+}
+module.exports.facet=facet;
+module.exports.reduce=reduce;
+// the files exposes 2 items ,a reduce function and a facet object
